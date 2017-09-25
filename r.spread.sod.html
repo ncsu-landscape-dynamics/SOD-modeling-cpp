@@ -4,6 +4,39 @@
 it simulates spread of Sudden Oak Death disease in California and Oregon
 (USA).
 
+
+<h2>NOTES</h2>
+
+The directions of wind consider north (N) to be grid north, if your
+true north is different direction, you need to make an adjustment.
+
+
+<h2>EXAMPLES</h2>
+
+Example of creating file with list of input maps (unix-like command
+line):
+
+<div class="code"><pre>
+g.list type=raster pattern="moisture_*" mapset=PRISM -m > moistures.txt
+g.list type=raster pattern="temperature_*" mapset=PRISM -m > temperatures.txt
+</pre></div>
+
+Note that the above assumes that the names will be ordered by time.
+You may need to pipe the result through <em>sort</em> with <tt>-n</tt>
+(<tt>| sort -n</tt>) to achieve this if filenames contain ordinal
+numbers but are not zero-padded (<tt>temperature_001</tt> versus
+<tt>temperature_1</tt>).
+
+Example of the run of the model (unix-like command line):
+
+<div class="code"><pre>
+r.spread.sod species=lide lvtree=all infected=infected_2005 \
+    moisture_file=moistures.txt temperature_file=temperatures.txt \
+    output=spread_sod start_time=2005 end_time=2010 \
+    rtype=cauchy wind=NE rseed=4
+</pre></div>
+
+
 <h2>REFERENCES</h2>
 
 <ul>
@@ -25,10 +58,6 @@ it simulates spread of Sudden Oak Death disease in California and Oregon
     <a href="https://doi.org/10.1016/j.envsoft.2017.02.020">DOI: 10.1016/j.envsoft.2017.02.020</a>
 </ul>
 
-<h2>NOTES</h2>
-
-The directions of wind consider north (N) to be grid north, if your
-true north is different direction, you need to make an adjustment.
 
 <h2>SEE ALSO</h2>
 
@@ -36,7 +65,8 @@ true north is different direction, you need to make an adjustment.
     <a href="r.spread.html">r.spread</a>
 </em>
 
-<h2>AUTHOR</h2>
+
+<h2>AUTHORS</h2>
 
 Francesco Tonini* (original R version)<br>
 Zexi Chen* (C++ version)<br>
