@@ -7,4 +7,4 @@ then
     exit 1
 fi
 
-cp $(git ls-files | grep -vE ".gitignore|cp2addons.sh") $1
+cp $(git ls-files | grep -vE ".gitignore|cp2addons.sh|LICENSE") $1
